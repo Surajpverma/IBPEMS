@@ -1,6 +1,7 @@
 package AuthPage;
 
 import CustomWidgets.GradientJPanel;
+import CustomWidgets.RoundBorder;
 import CustomWidgets.TransparentJPanel;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.awt.event.ActionListener;
 public class Auth extends JFrame implements ActionListener {
     private JTextField usernameField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
-    private JButton loginButton = new JButton();
+    private button.RoundButton loginButton = new button.RoundButton();
 
     public Auth() {
         setTitle("Employee Portal");
@@ -24,12 +25,18 @@ public class Auth extends JFrame implements ActionListener {
 
         //TITLE
         TransparentJPanel titlePanel = new TransparentJPanel();
+        ImageIcon ct1 = new ImageIcon("C:\\Users\\baner\\IdeaProjects\\DBSProject\\src\\AuthPage\\face.png");
+        Image ct2 = ct1.getImage().getScaledInstance(240, 240, Image.SCALE_DEFAULT);
+        ImageIcon ct3 = new ImageIcon(ct2);
         titlePanel.setLayout(new BorderLayout());
-        JLabel title = new JLabel("EMPLOYEE PORTAL");
+        JLabel title = new JLabel("LOGIN PORTAL");
         title.setFont(new Font(Font.SERIF, Font.BOLD, 42));
         title.setForeground(Color.WHITE);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setVerticalAlignment(SwingConstants.CENTER);
+        title.setHorizontalTextPosition(JLabel.CENTER);
+        title.setVerticalTextPosition(JLabel.BOTTOM);
+        title.setIcon(ct3);
         titlePanel.add(title);
         titlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titlePanel.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -42,7 +49,6 @@ public class Auth extends JFrame implements ActionListener {
         usernameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         usernameLabel.setForeground(Color.WHITE);
         usernameField.setPreferredSize(new Dimension(500, 36));
-        usernameField.setBackground(new Color(188, 255, 209, 255));
         usernameField.setOpaque(true);
         usernameRow.add(usernameLabel);
         usernameRow.add(usernameField);
@@ -55,7 +61,6 @@ public class Auth extends JFrame implements ActionListener {
         passwordLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         passwordLabel.setForeground(Color.WHITE);
         passwordField.setPreferredSize(new Dimension(500, 36));
-        passwordField.setBackground(new Color(188, 255, 209, 255));
         passwordFieldPanel.setPreferredSize(new Dimension(550, 36));
         passwordFieldPanel.add(passwordLabel);
         passwordFieldPanel.add(passwordField);
@@ -71,8 +76,11 @@ public class Auth extends JFrame implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
+        loginButton.setRadius(12);
         loginButton.addActionListener(this);
         loginButton.setPreferredSize(new Dimension(250, 40));
+        loginButton.setColor(new Color(133, 189, 118));
+        loginButton.setBorder(new RoundBorder(12, new Color(133, 189, 118)));
         loginButton.setText("LOGIN");
         loginButton.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         loginButton.setBackground(new Color(188, 255, 209, 255));

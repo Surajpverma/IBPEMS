@@ -1,4 +1,5 @@
 import AuthPage.Auth;
+import EmployeePage.Employee;
 
 import javax.swing.*;
 import java.awt.*;
