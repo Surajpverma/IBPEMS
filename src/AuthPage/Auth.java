@@ -5,6 +5,7 @@ import CustomWidgets.RoundBorder;
 import CustomWidgets.TransparentJPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +18,12 @@ public class Auth extends JFrame implements ActionListener {
     public Auth() {
         setTitle("Employee Portal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(720, 720);
+        setExtendedState(MAXIMIZED_BOTH);
         setLayout(new GridLayout(1, 2));
 
         GradientJPanel leftPanel = new GradientJPanel();
         leftPanel.setLayout(new GridLayout(3, 1));
+        leftPanel.setBorder(new EmptyBorder(60,20,20,20));
 
         //TITLE
         TransparentJPanel titlePanel = new TransparentJPanel();
