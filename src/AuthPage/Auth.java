@@ -3,6 +3,7 @@ package AuthPage;
 import CustomWidgets.GradientJPanel;
 import CustomWidgets.RoundBorder;
 import CustomWidgets.TransparentJPanel;
+import PersonalInfoPage.PersonalInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Auth extends JFrame implements ActionListener {
+public class Auth extends JFrame {
     private JTextField usernameField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
     private button.RoundButton loginButton = new button.RoundButton();
@@ -79,13 +80,28 @@ public class Auth extends JFrame implements ActionListener {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
         loginButton.setRadius(12);
-        loginButton.addActionListener(this);
         loginButton.setPreferredSize(new Dimension(250, 40));
         loginButton.setColor(new Color(133, 189, 118));
         loginButton.setBorder(new RoundBorder(12, new Color(133, 189, 118)));
         loginButton.setText("LOGIN");
         loginButton.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         loginButton.setBackground(new Color(188, 255, 209, 255));
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == loginButton) {
+                    String username = usernameField.getText();
+                    String password = new String(passwordField.getPassword());
+
+                    System.out.println("Username: " + username);
+                    System.out.println("Password: " + password);
+                }
+
+                // Open new page logic here
+                dispose();
+                new PersonalInfo().setVisible(true);
+            }
+        });
         buttonPanel.add(loginButton, gbc);
 
         leftPanel.add(titlePanel);
@@ -94,16 +110,5 @@ public class Auth extends JFrame implements ActionListener {
 
         add(leftPanel);
         add(new JPanel());
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loginButton) {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
-
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
-        }
     }
 }
