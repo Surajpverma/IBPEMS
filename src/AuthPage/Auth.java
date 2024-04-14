@@ -1,8 +1,10 @@
 package AuthPage;
 
+import AdminPage.Admin;
 import CustomWidgets.GradientJPanel;
 import CustomWidgets.RoundBorder;
 import CustomWidgets.TransparentJPanel;
+import EmployeePage.Employee;
 import PersonalInfoPage.PersonalInfo;
 
 import javax.swing.*;
@@ -10,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class Auth extends JFrame {
     private JTextField usernameField = new JTextField();
@@ -24,9 +27,9 @@ public class Auth extends JFrame {
 
         GradientJPanel leftPanel = new GradientJPanel();
         leftPanel.setLayout(new GridLayout(3, 1));
-        leftPanel.setBorder(new EmptyBorder(60,20,20,20));
+        leftPanel.setBorder(new EmptyBorder(60, 20, 20, 20));
 
-        //TITLE
+        // TITLE
         TransparentJPanel titlePanel = new TransparentJPanel();
         ImageIcon ct1 = new ImageIcon("C:\\Users\\baner\\IdeaProjects\\DBSProject\\src\\AuthPage\\face.png");
         Image ct2 = ct1.getImage().getScaledInstance(240, 240, Image.SCALE_DEFAULT);
@@ -44,7 +47,7 @@ public class Auth extends JFrame {
         titlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titlePanel.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        //TEXT FIELDS
+        // TEXT FIELDS
         TransparentJPanel usernameRow = new TransparentJPanel();
         TransparentJPanel usernameFieldPanel = new TransparentJPanel();
         usernameFieldPanel.setLayout(new BorderLayout());
@@ -73,7 +76,7 @@ public class Auth extends JFrame {
         textFieldPanel.add(usernameFieldPanel);
         textFieldPanel.add(passwordFieldPanel);
 
-        //LOGIN BUTTON
+        // LOGIN BUTTON
         TransparentJPanel buttonPanel = new TransparentJPanel();
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -89,17 +92,52 @@ public class Auth extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == loginButton) {
-                    String username = usernameField.getText();
-                    String password = new String(passwordField.getPassword());
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
-                    System.out.println("Username: " + username);
-                    System.out.println("Password: " + password);
+                    String query = "SELECT users.hash, users.salt, employee.position \n" +
+                            "FROM users \n" +
+                            "INNER JOIN employee ON users.employeeID = employee.employeeID \n" +
+                            "WHERE userName = '" + usernameField.getText() + "'";
+                    PreparedStatement preparedStatement = con.prepareStatement(query);
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    if (!resultSet.next()) {
+                        JOptionPane.showMessageDialog(null, "Invalid username. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                        throw new SQLException("invalid username");
+                    }
+                    else {
+                        do {
+                            String storedHash = resultSet.getString("hash");
+                            String storedSalt = resultSet.getString("salt");
+                            String storedPosition = resultSet.getString("position");
+
+                            System.out.println(storedPosition);
+
+                            // Checking validate password
+                            if (PasswordDecrypt.checkPassword(storedHash, storedSalt, new String(passwordField.getPassword()))) {
+                                // Open new page logic
+                                dispose();
+                                if (storedPosition.equals("Admin")) // Compare strings using equals method
+                                    new Admin().setVisible(true);
+                                else
+                                    new Employee().setVisible(true);
+                            } else {
+                                // Password is incorrect, show an error message to the user
+                                JOptionPane.showMessageDialog(null, "Invalid password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } while (resultSet.next());
+                    }
+
+                    // Close resources
+                    resultSet.close();
+                    preparedStatement.close();
+                    con.close();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
-
-                // Open new page logic here
-                dispose();
-                new PersonalInfo().setVisible(true);
             }
         });
         buttonPanel.add(loginButton, gbc);
@@ -110,5 +148,11 @@ public class Auth extends JFrame {
 
         add(leftPanel);
         add(new JPanel());
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new Auth().setVisible(true); // Create an instance of Auth and display the GUI to be removed after completion of project
+        });
     }
 }
