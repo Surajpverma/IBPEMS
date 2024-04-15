@@ -1,9 +1,12 @@
 package AdminPage;
 
+import AddEmployeePage.AddEmployee;
+import AuthPage.Auth;
 import CustomWidgets.TransparentJPanel;
 import EmployeePage.Employee;
 import LeavePage.Leave;
 import PersonalInfoPage.PersonalInfo;
+import SearchEmployeePage.SearchEmployee;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +23,7 @@ public class Admin extends JFrame {
         // MAIN PANEL
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(new EmptyBorder(40, 20, 100, 20));
+        mainPanel.setBorder(new EmptyBorder(40, 20, 40, 20));
 
         // WELCOME TEXT
         JLabel welcomeText = new JLabel("WELCOME $NAME");
@@ -77,7 +80,49 @@ public class Admin extends JFrame {
         button2.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button2.setBackground(new Color(47, 45, 82)); // Set background color
         button2.setPreferredSize(new Dimension(600, 60));
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                dispose();
+                new AddEmployee().setVisible(true);
+            }
+        });
         buttonPanel.add(button2, gbc);
+        buttonPanel.add(Box.createVerticalStrut(16), gbc);
+
+        JButton button5 = new JButton("Search Employee");
+        button5.setForeground(Color.WHITE); // Set text color
+        button5.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
+        button5.setBackground(new Color(47, 45, 82)); // Set background color
+        button5.setPreferredSize(new Dimension(600, 60));
+        button5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                dispose();
+                new SearchEmployee().setVisible(true);
+            }
+        });
+        buttonPanel.add(button5, gbc);
+        buttonPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
+        buttonPanel.add(Box.createVerticalStrut(16), gbc);
+
+        JButton button6 = new JButton("Manage Projects");
+        button6.setForeground(Color.WHITE); // Set text color
+        button6.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
+        button6.setBackground(new Color(47, 45, 82)); // Set background color
+        button6.setPreferredSize(new Dimension(600, 60));
+        button6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                dispose();
+                new Leave().setVisible(true);
+            }
+        });
+        buttonPanel.add(button6, gbc);
+        buttonPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
         JButton button3 = new JButton("Mark Attendance");
@@ -103,7 +148,23 @@ public class Admin extends JFrame {
         });
         buttonPanel.add(button4, gbc);
         buttonPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
-        
+        buttonPanel.add(Box.createVerticalStrut(16), gbc);
+
+        JButton button7 = new JButton("Logout");
+        button7.setForeground(Color.WHITE); // Set text color
+        button7.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
+        button7.setBackground(new Color(47, 45, 82)); // Set background color
+        button7.setPreferredSize(new Dimension(600, 60));
+        button7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                dispose();
+                new Auth().setVisible(true);
+            }
+        });
+        buttonPanel.add(button7, gbc);
+        buttonPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
 
         // Set fixed height for subtitleRow
         subtitleRow.setPreferredSize(new Dimension(720, 60)); // Set preferred size
