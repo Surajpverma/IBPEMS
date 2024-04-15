@@ -1,9 +1,7 @@
-package SearchEmployeePage;
+package ManageProjectPage;
 
 import AdminPage.Admin;
 import CustomWidgets.TransparentJPanel;
-import LeavePage.Leave;
-import PersonalInfoPage.PersonalInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,8 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SearchEmployee extends JFrame {
-    public SearchEmployee() {
+public class ManageProject extends JFrame {
+    ManageProject() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
@@ -23,7 +21,7 @@ public class SearchEmployee extends JFrame {
         mainPanel.setBorder(new EmptyBorder(40, 20, 60, 20));
 
         // WELCOME TEXT
-        JLabel welcomeText = new JLabel("SEARCH/EDIT EMPLOYEE");
+        JLabel welcomeText = new JLabel("MANAGE PROJECTS");
         welcomeText.setBorder(new EmptyBorder(0, 0, 40, 0));
         welcomeText.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
         welcomeText.setFont(new Font(Font.SERIF, Font.BOLD, 42));
@@ -43,7 +41,7 @@ public class SearchEmployee extends JFrame {
         searchBar.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
 
         // Label for the search bar
-        JLabel searchLabel = new JLabel("Username: ");
+        JLabel searchLabel = new JLabel("Project Name: ");
         searchLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         searchLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -74,12 +72,20 @@ public class SearchEmployee extends JFrame {
         buttonPanel.add(button1, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
-        JButton button2 = new JButton("Assign Task");
+        JButton button2 = new JButton("Edit Project");
         button2.setForeground(Color.WHITE); // Set text color
         button2.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button2.setBackground(new Color(47, 45, 82)); // Set background color
         button2.setPreferredSize(new Dimension(600, 60));
         buttonPanel.add(button2, gbc);
+        buttonPanel.add(Box.createVerticalStrut(16), gbc);
+
+        JButton button4 = new JButton("Add New Project");
+        button4.setForeground(Color.WHITE); // Set text color
+        button4.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
+        button4.setBackground(new Color(47, 45, 82)); // Set background color
+        button4.setPreferredSize(new Dimension(600, 60));
+        buttonPanel.add(button4, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
         JButton button3 = new JButton("Back");
@@ -120,9 +126,5 @@ public class SearchEmployee extends JFrame {
         mainPanel.add(Box.createVerticalGlue()); // Add vertical glue to push components upwards
         mainPanel.add(contentPanel);
         add(mainPanel, BorderLayout.CENTER);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new SearchEmployee().setVisible(true));
     }
 }
