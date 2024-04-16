@@ -11,9 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class Leave extends JFrame {
@@ -122,6 +120,21 @@ public class Leave extends JFrame {
         applyLeaveButton.setForeground(Color.WHITE);
         applyLeaveButton.setBackground(new Color(47, 45, 82));
         applyLeaveButton.setPreferredSize(new Dimension(200, 40));
+        applyLeaveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    LeaveSQLQueries.applyLeave(DateLabelFormatter.convertToSQLDate(datePicker.getModel().getValue()), DateLabelFormatter.convertToSQLDate(datePickerTo.getModel().getValue()));
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                // Open new page logic here
+                dispose();
+                new Employee().setVisible(true);
+            }
+        });
         JButton goBackButton = new JButton("Go Back");
         goBackButton.setBackground(new Color(47, 45, 82));
         goBackButton.setForeground(Color.WHITE);

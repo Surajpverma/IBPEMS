@@ -26,6 +26,7 @@ public class AuthSQLQueries {
             String taskID = resultSet.getString("taskID");
             String taskName = resultSet.getString("taskName");
             String deadline = resultSet.getString("deadline");
+            System.out.println(taskID);
             tasks.add("Task ID: " + taskID + ", Task Name: " + taskName + ", Deadline: " + deadline);
         }
 

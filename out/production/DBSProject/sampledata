@@ -11,10 +11,10 @@ INSERT INTO branch (location, classification) VALUES
 ('Tokyo', 'sideOffice');
 
 -- Sample entries for the 'employee' table
-INSERT INTO employee (position, fName, lName, gender, hiringDate, email, salary, DOB, userID, deptID, branchID) VALUES
-('Software Engineer', 'John', 'Doe', 'Male', '2023-01-15', 'john@example.com', 80000, '1990-05-20', 1, 'IT', 1),
-('HR Manager', 'Alice', 'Smith', 'Female', '2023-02-20', 'alice@example.com', 70000, '1985-08-12', 2, 'HR', 2),
-('Sales Representative', 'Bob', 'Johnson', 'Male', '2023-03-10', 'bob@example.com', 60000, '1992-11-25', 3, 'SL', 3);
+INSERT INTO employee (position, fName, lName, gender, hiringDate, email, salary, DOB, deptID, branchID) VALUES
+('Software Engineer', 'John', 'Doe', 'Male', '2023-01-15', 'john@example.com', 80000, '1990-05-20', 'IT', 1),
+('HR Manager', 'Alice', 'Smith', 'Female', '2023-02-20', 'alice@example.com', 70000, '1985-08-12', 'HR', 2),
+('Sales Representative', 'Bob', 'Johnson', 'Male', '2023-03-10', 'bob@example.com', 60000, '1992-11-25', 'SL', 3);
 
 -- Sample entries for the 'phoneNumbers' table
 INSERT INTO phoneNumbers (pNumber, employeeID) VALUES
@@ -24,9 +24,9 @@ INSERT INTO phoneNumbers (pNumber, employeeID) VALUES
 
 -- Sample entries for the 'users' table
 INSERT INTO users (userName, hash, salt, employeeID) VALUES
-('john_doe', 'Z6dYIFVfA+E6EGcaWVcfF+ekvsWTPwxeZ8vGgiE5Ua8=', 'eXaosVlLUsKdEktTNxbIRQ==', 1),
-('alice_smith', 'Z6dYIFVfA+E6EGcaWVcfF+ekvsWTPwxeZ8vGgiE5Ua8=', 'eXaosVlLUsKdEktTNxbIRQ==', 2),
-('bob_johnson', 'Z6dYIFVfA+E6EGcaWVcfF+ekvsWTPwxeZ8vGgiE5Ua8=', 'eXaosVlLUsKdEktTNxbIRQ==', 3);
+('johndoe', 'Z6dYIFVfA+E6EGcaWVcfF+ekvsWTPwxeZ8vGgiE5Ua8=', 'eXaosVlLUsKdEktTNxbIRQ==', 1),
+('alicesmith', 'Z6dYIFVfA+E6EGcaWVcfF+ekvsWTPwxeZ8vGgiE5Ua8=', 'eXaosVlLUsKdEktTNxbIRQ==', 2),
+('bobjohnson', 'Z6dYIFVfA+E6EGcaWVcfF+ekvsWTPwxeZ8vGgiE5Ua8=', 'eXaosVlLUsKdEktTNxbIRQ==', 3);
 
 -- Sample entries for the 'project' table
 INSERT INTO project (projectID, projectName, pstatus, budget, startDate, endDate) VALUES
@@ -37,13 +37,17 @@ INSERT INTO project (projectID, projectName, pstatus, budget, startDate, endDate
 INSERT INTO task (taskID, taskName, deadline, assignedOn, projectID) VALUES
 ('PRJ01T01', 'Design Mockups', '2023-04-15', '2023-04-02 09:00:00', 'PRJ01'),
 ('PRJ01T02', 'Frontend Development', '2023-05-15', '2023-04-15 09:00:00', 'PRJ01'),
-('PRJ02T01', 'Market Research', '2023-06-30', '2023-05-20 09:00:00', 'PRJ02');
+('PRJ02T01', 'Market Research', '2023-06-30', '2023-05-20 09:00:00', 'PRJ02'),
+('PRJ02T02', 'Search Engine Optimisation', '2023-06-30', '2023-05-20 09:00:00', 'PRJ02'),
+('PRJ01T03', 'Market Outreach', '2023-06-30', '2023-05-25 09:00:00', 'PRJ01');
 
 -- Sample entries for the 'worksOn' table
 INSERT INTO worksOn (taskID, employeeID) VALUES
 ('PRJ01T01', 1),
 ('PRJ01T02', 1),
-('PRJ02T01', 3);
+('PRJ02T01', 3),
+('PRJ02T02', 3),
+('PRJ01T03', 3);
 
 -- Sample entries for the 'attendance' table
 INSERT INTO attendance (employeeID, date, intime, outtime) VALUES
@@ -60,4 +64,6 @@ INSERT INTO leaves (leaveID, employeeID, startDate, endDate, status) VALUES
 INSERT INTO salary (amount, date, employeeID) VALUES
 (5000, '2023-04-30', 1),
 (4500, '2023-04-30', 2),
-(4000, '2023-04-30', 3);
+(4000, '2023-04-30', 3),
+(4000, '2023-05-30', 3),
+(4000, '2023-06-30', 3);

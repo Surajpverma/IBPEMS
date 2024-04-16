@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Employee extends JFrame {
@@ -55,7 +57,7 @@ public class Employee extends JFrame {
 
         // LEFT SIDE: Buttons
         JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(4, 1, 0, 10)); // 4 rows, 1 column, vertical gap of 10
+        leftPanel.setLayout(new GridLayout(5, 1, 0, 10)); // 4 rows, 1 column, vertical gap of 10
         leftPanel.setBorder(new EmptyBorder(0, 0, 0, 20)); // Right margin for leftPanel
 
         JButton button1 = new JButton("Personal Information");
@@ -78,6 +80,20 @@ public class Employee extends JFrame {
         button2.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button2.setBackground(new Color(47, 45, 82)); // Set background color
         button2.setBorder(new EmptyBorder(10, 20, 10, 20)); // Apply margin to buttons
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    EmployeeSQLQueries.generateSalaryReport();
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         leftPanel.add(button2);
 
         JButton button3 = new JButton("Mark Attendance");
@@ -85,6 +101,18 @@ public class Employee extends JFrame {
         button3.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button3.setBackground(new Color(47, 45, 82)); // Set background color
         button3.setBorder(new EmptyBorder(10, 20, 10, 20)); // Apply margin to buttons
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    EmployeeSQLQueries.markAttendance();
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         leftPanel.add(button3);
 
         JButton button4 = new JButton("Apply Leave");
@@ -124,8 +152,10 @@ public class Employee extends JFrame {
         List<String> tasks = UserGlobalData.getUserTasks();
         String taskString = "";
         for (int i = 0; i<=tasks.size() - 1; i++) {
+            System.out.println(tasks);
             taskString = (new StringBuilder()).append(taskString).append(tasks.get(i)).append("\n").toString();
         }
+        System.out.println(tasks);
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
         textArea.setText("Ongoing Tasks:\n" + taskString);

@@ -17,7 +17,6 @@ public class PasswordDecrypt {
     public static boolean checkPassword(String storedHashedPassword, String storedSalt, String enteredPassword) {
         try {
             System.out.println(enteredPassword);
-            System.out.println(storedHashedPassword + "  " + storedSalt);
 
             // Convert the stored salt from Base64 string to byte array
             byte[] salt = Base64.getDecoder().decode(storedSalt);

@@ -119,8 +119,6 @@ public class Auth extends JFrame {
                             String name = resultSet.getString("fName") + " " + resultSet.getString("lName");
                             String branch = resultSet.getString("location");
 
-                            System.out.println(storedPosition);
-
                             // Checking validate password
                             if (PasswordDecrypt.checkPassword(storedHash, storedSalt, new String(passwordField.getPassword()))) {
                                 // Open new page logic

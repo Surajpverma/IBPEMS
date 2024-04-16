@@ -24,7 +24,6 @@ CREATE TABLE employee (
     email VARCHAR(320) NOT NULL UNIQUE,
     salary INT NULL,	/*Incase employee is fired. No need to set an additional attribute just query if salary is null*/
     DOB DATE NOT NULL,
-    userID INT NOT NULL UNIQUE,
     deptID VARCHAR(3) NULL,
     branchID INT NULL,
     FOREIGN KEY (deptID)
@@ -98,8 +97,8 @@ CREATE TABLE attendance (
 );
 
 CREATE TABLE leaves (
-	leaveID VARCHAR(10) PRIMARY KEY, /*Combine employee ID and date*/
-    employeeID INT UNIQUE NOT NULL,
+	leaveID VARCHAR(32) PRIMARY KEY, /*Combine employee ID and date*/
+    employeeID INT NOT NULL,
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     status VARCHAR(8) DEFAULT 'Pending' CHECK (status IN ('Pending', 'Approved', 'Denied')) NOT NULL,
@@ -112,7 +111,7 @@ CREATE TABLE salary (
     paymentID INT AUTO_INCREMENT PRIMARY KEY,
     amount INT NOT NULL,
     date DATE NOT NULL,
-    employeeID INT UNIQUE NOT NULL,
+    employeeID INT NOT NULL,
     FOREIGN KEY (employeeID)
         REFERENCES employee (employeeID)
         ON DELETE CASCADE

@@ -19,12 +19,9 @@
     <connection id="d1565a62-fe14-4011-8951-ed37c2135e96">
       <console name="MySQL Connection" type="STANDARD" schema="employee_management" session="Main"><![CDATA[use employee_management
 
-SELECT t.taskID, t.taskName, t.deadline
-FROM task t
-INNER JOIN worksOn w ON t.taskID = w.taskID
-INNER JOIN employee e ON w.employeeID = e.employeeID
-WHERE e.employeeID = 3
-ORDER BY t.deadline ASC;]]></console>
+INSERT INTO worksOn (taskID, employeeID) VALUES)
+('PRJ02T02', 3),
+('PRJ01T03', 3);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -32,8 +29,7 @@ ORDER BY t.deadline ASC;]]></console>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" object-ref="schemas/employee_management/tables/users" />
-      <object connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" object-ref="consoles/MySQL Connection" />
+      <object connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" object-ref="schemas/employee_management/tables/leaves" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
@@ -42,7 +38,10 @@ ORDER BY t.deadline ASC;]]></console>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.workson" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.users" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.attendance" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.employee" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.salary" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.leaves" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" dataset="employee_management.task" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">

@@ -1,6 +1,7 @@
 package CustomWidgets;
 
 import javax.swing.*;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +24,18 @@ public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
         }
 
         return "";
+    }
+
+    public static Date convertToSQLDate(Object dateObj) {
+        if (dateObj instanceof java.util.Date) {
+            java.util.Date utilDate = (java.util.Date) dateObj;
+            return new Date(utilDate.getTime());
+        } else if (dateObj instanceof java.util.Calendar) {
+            java.util.Calendar calendar = (java.util.Calendar) dateObj;
+            return new Date(calendar.getTimeInMillis());
+        } else {
+            throw new IllegalArgumentException("Invalid date object: " + dateObj);
+        }
     }
 
 }
