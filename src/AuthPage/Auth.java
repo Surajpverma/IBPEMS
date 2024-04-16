@@ -6,6 +6,7 @@ import CustomWidgets.RoundBorder;
 import CustomWidgets.TransparentJPanel;
 import EmployeePage.Employee;
 import PersonalInfoPage.PersonalInfo;
+import UserGlobalData.UserGlobalData;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.List;
 
 public class Auth extends JFrame {
     private JTextField usernameField = new JTextField();
@@ -31,7 +33,7 @@ public class Auth extends JFrame {
 
         // TITLE
         TransparentJPanel titlePanel = new TransparentJPanel();
-        ImageIcon ct1 = new ImageIcon("C:\\Users\\baner\\IdeaProjects\\DBSProject\\src\\AuthPage\\face.png");
+        ImageIcon ct1 = new ImageIcon("src/AuthPage/face.png");
         Image ct2 = ct1.getImage().getScaledInstance(240, 240, Image.SCALE_DEFAULT);
         ImageIcon ct3 = new ImageIcon(ct2);
         titlePanel.setLayout(new BorderLayout());
@@ -96,9 +98,10 @@ public class Auth extends JFrame {
                     Class.forName("com.mysql.cj.jdbc.Driver");
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
-                    String query = "SELECT users.hash, users.salt, employee.position \n" +
+                    String query = "SELECT employee.employeeID, users.hash, users.salt, employee.position, employee.fName, employee.lName, branch.location \n" +
                             "FROM users \n" +
                             "INNER JOIN employee ON users.employeeID = employee.employeeID \n" +
+                            "INNER JOIN branch ON employee.branchID = branch.branchID \n" +
                             "WHERE userName = '" + usernameField.getText() + "'";
                     PreparedStatement preparedStatement = con.prepareStatement(query);
 
@@ -107,12 +110,14 @@ public class Auth extends JFrame {
                     if (!resultSet.next()) {
                         JOptionPane.showMessageDialog(null, "Invalid username. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                         throw new SQLException("invalid username");
-                    }
-                    else {
+                    } else {
                         do {
+                            int employeeID = resultSet.getInt("employeeID");
                             String storedHash = resultSet.getString("hash");
                             String storedSalt = resultSet.getString("salt");
                             String storedPosition = resultSet.getString("position");
+                            String name = resultSet.getString("fName") + " " + resultSet.getString("lName");
+                            String branch = resultSet.getString("location");
 
                             System.out.println(storedPosition);
 
@@ -120,10 +125,23 @@ public class Auth extends JFrame {
                             if (PasswordDecrypt.checkPassword(storedHash, storedSalt, new String(passwordField.getPassword()))) {
                                 // Open new page logic
                                 dispose();
-                                if (storedPosition.equals("Admin")) // Compare strings using equals method
+                                if (storedPosition.equals("Admin") || storedPosition.equals("Branch Manager") || storedPosition.equals("Project Manager")) {
+                                    UserGlobalData.setUserEmployeeID(employeeID);
+                                    UserGlobalData.setUserName(usernameField.getText());
+                                    UserGlobalData.setUserFullName(name);
+                                    UserGlobalData.setUserBranch(branch);
+                                    UserGlobalData.setIsAdmin(true);
                                     new Admin().setVisible(true);
-                                else
+                                } else {
+                                    UserGlobalData.setUserEmployeeID(employeeID);
+                                    UserGlobalData.setUserName(usernameField.getText());
+                                    UserGlobalData.setUserFullName(name);
+                                    UserGlobalData.setUserBranch(branch);
+                                    UserGlobalData.setIsAdmin(false);
+                                    UserGlobalData.setUserTasks(AuthSQLQueries.getEmployeeTasks(employeeID));
+
                                     new Employee().setVisible(true);
+                                }
                             } else {
                                 // Password is incorrect, show an error message to the user
                                 JOptionPane.showMessageDialog(null, "Invalid password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -3,10 +3,10 @@ package AdminPage;
 import AddEmployeePage.AddEmployee;
 import AuthPage.Auth;
 import CustomWidgets.TransparentJPanel;
-import EmployeePage.Employee;
 import LeavePage.Leave;
 import PersonalInfoPage.PersonalInfo;
 import SearchEmployeePage.SearchEmployee;
+import UserGlobalData.UserGlobalData;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,7 +26,7 @@ public class Admin extends JFrame {
         mainPanel.setBorder(new EmptyBorder(40, 20, 40, 20));
 
         // WELCOME TEXT
-        JLabel welcomeText = new JLabel("WELCOME $NAME");
+        JLabel welcomeText = new JLabel("WELCOME " + UserGlobalData.getUserFullName().toUpperCase());
         welcomeText.setBorder(new EmptyBorder(0, 0, 40, 0));
         welcomeText.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
         welcomeText.setFont(new Font(Font.SERIF, Font.BOLD, 42));
@@ -36,7 +36,7 @@ public class Admin extends JFrame {
 
         // SUBTITLE PANEL
         JPanel subtitleRow = new JPanel(new GridLayout());
-        JLabel branch = new JLabel("Branch: $NAME");
+        JLabel branch = new JLabel("Branch: " + UserGlobalData.getUserBranch());
         branch.setHorizontalAlignment(SwingConstants.CENTER);
         branch.setFont(new Font(Font.SERIF, Font.BOLD, 24));
         branch.setForeground(new Color(47, 45, 82));
@@ -158,6 +158,7 @@ public class Admin extends JFrame {
         button7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                UserGlobalData.eraseData();
                 // Open new page logic here
                 dispose();
                 new Auth().setVisible(true);

@@ -1,13 +1,16 @@
 package EmployeePage;
 
+import AuthPage.Auth;
 import LeavePage.Leave;
 import PersonalInfoPage.PersonalInfo;
+import UserGlobalData.UserGlobalData;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class Employee extends JFrame {
     public Employee() {
@@ -21,7 +24,7 @@ public class Employee extends JFrame {
         mainPanel.setBorder(new EmptyBorder(40, 20, 160, 20));
 
         // WELCOME TEXT
-        JLabel welcomeText = new JLabel("WELCOME $NAME");
+        JLabel welcomeText = new JLabel("WELCOME " + UserGlobalData.getUserFullName().toUpperCase());
         welcomeText.setBorder(new EmptyBorder(0, 0, 40, 0));
         welcomeText.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
         welcomeText.setFont(new Font(Font.SERIF, Font.BOLD, 42));
@@ -31,15 +34,15 @@ public class Employee extends JFrame {
 
         // SUBTITLE PANEL
         JPanel subtitleRow = new JPanel(new GridLayout());
-        JLabel branch = new JLabel("Branch: $NAME");
+        JLabel branch = new JLabel("Branch: " + UserGlobalData.getUserBranch());
         branch.setHorizontalAlignment(SwingConstants.CENTER);
         branch.setFont(new Font(Font.SERIF, Font.BOLD, 24));
         branch.setForeground(new Color(47, 45, 82));
-        JLabel projects = new JLabel("Upcoming Deadline: $NAME");
+        JLabel projects = new JLabel("Upcoming Deadline: " + UserGlobalData.getFirstTaskDeadlineFromUserTasks());
         projects.setHorizontalAlignment(SwingConstants.CENTER);
         projects.setFont(new Font(Font.SERIF, Font.BOLD, 24));
         projects.setForeground(new Color(47, 45, 82));
-        JLabel employees = new JLabel("Task: $NAME");
+        JLabel employees = new JLabel("Task: " + UserGlobalData.getFirstTaskNameFromUserTasks());
         employees.setHorizontalAlignment(SwingConstants.CENTER);
         employees.setFont(new Font(Font.SERIF, Font.BOLD, 24));
         employees.setForeground(new Color(47, 45, 82));
@@ -99,12 +102,33 @@ public class Employee extends JFrame {
         });
         leftPanel.add(button4);
 
+        JButton button5 = new JButton("Logout");
+        button5.setForeground(Color.WHITE); // Set text color
+        button5.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
+        button5.setBackground(new Color(47, 45, 82)); // Set background color
+        button5.setBorder(new EmptyBorder(10, 20, 10, 20)); // Apply margin to buttons
+        button5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserGlobalData.eraseData();
+                // Open new page logic here
+                dispose();
+                new Auth().setVisible(true);
+            }
+        });
+        leftPanel.add(button5);
+
         leftPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
 
         // RIGHT SIDE: Multiline Text Area
+        List<String> tasks = UserGlobalData.getUserTasks();
+        String taskString = "";
+        for (int i = 0; i<=tasks.size() - 1; i++) {
+            taskString = (new StringBuilder()).append(taskString).append(tasks.get(i)).append("\n").toString();
+        }
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
-        textArea.setText("Ongoing Tasks:\n1. Help son in Math homework\n2. Bring milk from market\n3. Satisfy my wife\n4. Regret my life");
+        textArea.setText("Ongoing Tasks:\n" + taskString);
         textArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         textArea.setForeground(new Color(47, 45, 82));
         textArea.setEditable(false);
