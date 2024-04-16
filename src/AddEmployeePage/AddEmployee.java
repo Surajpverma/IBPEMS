@@ -5,6 +5,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 import AdminPage.Admin;
@@ -121,6 +125,16 @@ public class AddEmployee extends JFrame {
         gbc.gridy++;
         gbc.gridx = 0;
 
+        JLabel deptIdLabel = new JLabel("Department Id:");
+        deptIdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        JTextField deptIdField = new JTextField();
+        deptIdField.setPreferredSize(new Dimension(600, 30));
+        detailsPanel.add(deptIdLabel, gbc);
+        gbc.gridx++;
+        detailsPanel.add(deptIdField, gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+
         JLabel positionLabel = new JLabel("Position:");
         positionLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         JTextField positionField = new JTextField();
@@ -131,7 +145,17 @@ public class AddEmployee extends JFrame {
         gbc.gridy++;
         gbc.gridx = 0;
 
-        JLabel branchLabel = new JLabel("Branch:");
+        JLabel salaryLabel = new JLabel("Salary:");
+        salaryLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        JTextField salaryField = new JTextField();
+        salaryField.setPreferredSize(new Dimension(600, 30));
+        detailsPanel.add(salaryLabel, gbc);
+        gbc.gridx++;
+        detailsPanel.add(salaryField, gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+
+        JLabel branchLabel = new JLabel("Branch Id:");
         branchLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         JTextField branchField = new JTextField();
         branchField.setPreferredSize(new Dimension(600, 30));
@@ -154,6 +178,42 @@ public class AddEmployee extends JFrame {
         addButton.setForeground(Color.WHITE);
         addButton.setBackground(new Color(47, 45, 82));
         addButton.setPreferredSize(new Dimension(200, 40));
+        addButton.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(hiringDateChooserModel.getValue());
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1;
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String hiringDate = year + "-" + month + "-" + day;
+
+                    calendar.setTime(dobChooserModel.getValue());
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH) + 1;
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String dob = year + "-" + month + "-" + day;
+
+
+                    AddEmpSQLQueries addEmpSQLQueries = new AddEmpSQLQueries();
+                    addEmpSQLQueries.addEmployee(
+                            positionField.getText(),
+                            firstNameField.getText(),
+                            lastNameField.getText(),
+                            (String) genderComboBox.getSelectedItem(),
+                            hiringDate,
+                            emailField.getText(),
+                            salaryField.getText(),
+                            dob,
+                            deptIdField.getText(),
+                            branchField.getText());
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
         JButton goBackButton = new JButton("Go Back");
         goBackButton.setBackground(new Color(47, 45, 82));
         goBackButton.setForeground(Color.WHITE);

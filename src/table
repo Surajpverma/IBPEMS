@@ -24,7 +24,6 @@ CREATE TABLE employee (
     email VARCHAR(320) NOT NULL UNIQUE,
     salary INT NULL,	/*Incase employee is fired. No need to set an additional attribute just query if salary is null*/
     DOB DATE NOT NULL,
-    userID INT NOT NULL UNIQUE,
     deptID VARCHAR(3) NULL,
     branchID INT NULL,
     FOREIGN KEY (deptID)
