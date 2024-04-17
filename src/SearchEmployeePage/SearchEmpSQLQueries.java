@@ -1,5 +1,6 @@
 package SearchEmployeePage;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,5 +109,26 @@ public class SearchEmpSQLQueries {
         con.close();
 
         return info;
+    }
+
+    public static void deleteEmployee(String empID) throws SQLException, ClassNotFoundException {
+        List<String> tasks = new ArrayList<>();
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
+
+        String query = "DELETE FROM employee WHERE employeeID = " + empID;
+        PreparedStatement preparedStatement = con.prepareStatement(query);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        preparedStatement.close();
+        con.close();
+
+        if (rowsAffected > 0)
+            JOptionPane.showMessageDialog(null, "Employee removed Successfully");
+        else
+            JOptionPane.showMessageDialog(null, "Failed remove Employee");
+
     }
 }
