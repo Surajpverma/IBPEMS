@@ -3,7 +3,9 @@ package AdminPage;
 import AddEmployeePage.AddEmployee;
 import AuthPage.Auth;
 import CustomWidgets.TransparentJPanel;
+import EmployeePage.EmployeeSQLQueries;
 import LeavePage.Leave;
+import ManageProjectPage.ManageProject;
 import PersonalInfoPage.PersonalInfo;
 import SearchEmployeePage.SearchEmployee;
 import UserGlobalData.UserGlobalData;
@@ -13,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class Admin extends JFrame {
     public Admin() {
@@ -118,7 +121,7 @@ public class Admin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Open new page logic here
                 dispose();
-                new Leave().setVisible(true);
+                new ManageProject().setVisible(true);
             }
         });
         buttonPanel.add(button6, gbc);
@@ -130,6 +133,18 @@ public class Admin extends JFrame {
         button3.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button3.setBackground(new Color(47, 45, 82)); // Set background color
         button3.setPreferredSize(new Dimension(600, 60));
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    EmployeeSQLQueries.markAttendance();
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         buttonPanel.add(button3, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 

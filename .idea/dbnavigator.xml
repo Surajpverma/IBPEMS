@@ -28,9 +28,7 @@ INSERT INTO worksOn (taskID, employeeID) VALUES)
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" object-ref="schemas/employee_management/tables/leaves" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d1565a62-fe14-4011-8951-ed37c2135e96" />

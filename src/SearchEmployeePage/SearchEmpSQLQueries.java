@@ -1,15 +1,13 @@
 package SearchEmployeePage;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchEmpSQLQueries {
     public static String searchEmployee(String employeeID) throws SQLException, ClassNotFoundException {
         String info = null;
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
         String query = "SELECT *\n" +
                 "FROM employee e\n" +

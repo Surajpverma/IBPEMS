@@ -63,7 +63,7 @@ CREATE TABLE project (
 );
 
 CREATE TABLE task (
-    taskID VARCHAR(8) PRIMARY KEY,	/*Combine project and employee id for task id*/
+    taskID VARCHAR(32) PRIMARY KEY,	/*Combine project and employee id for task id*/
     taskName VARCHAR(50) UNIQUE NOT NULL,
     deadline DATE NOT NULL,
     assignedOn DATETIME NOT NULL,

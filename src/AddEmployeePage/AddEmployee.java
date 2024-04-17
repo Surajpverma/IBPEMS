@@ -182,30 +182,16 @@ public class AddEmployee extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(hiringDateChooserModel.getValue());
-                    int year = calendar.get(Calendar.YEAR);
-                    int month = calendar.get(Calendar.MONTH) + 1;
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    String hiringDate = year + "-" + month + "-" + day;
-
-                    calendar.setTime(dobChooserModel.getValue());
-                    year = calendar.get(Calendar.YEAR);
-                    month = calendar.get(Calendar.MONTH) + 1;
-                    day = calendar.get(Calendar.DAY_OF_MONTH);
-                    String dob = year + "-" + month + "-" + day;
-
-
                     AddEmpSQLQueries addEmpSQLQueries = new AddEmpSQLQueries();
                     addEmpSQLQueries.addEmployee(
                             positionField.getText(),
                             firstNameField.getText(),
                             lastNameField.getText(),
                             (String) genderComboBox.getSelectedItem(),
-                            hiringDate,
+                            DateLabelFormatter.convertToSQLDate(hiringDateChooserPicker.getModel().getValue()),
                             emailField.getText(),
                             salaryField.getText(),
-                            dob,
+                            DateLabelFormatter.convertToSQLDate(dobChooserPicker.getModel().getValue()),
                             deptIdField.getText(),
                             branchField.getText());
                 }
