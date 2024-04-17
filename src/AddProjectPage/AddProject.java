@@ -2,6 +2,8 @@ package AddProjectPage;
 
 import AdminPage.Admin;
 import CustomWidgets.DateLabelFormatter;
+import ManageProjectPage.ManageProject;
+import SearchEmployeePage.SearchEmployee;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -125,7 +127,7 @@ public class AddProject extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Open new page logic here
                 dispose();
-                new Admin().setVisible(true);
+                new ManageProject().setVisible(true);
             }
         });
         buttonsPanel.add(addButton);
@@ -135,5 +137,8 @@ public class AddProject extends JFrame {
         mainPanel.add(buttonsPanel);
 
         add(mainPanel);
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new AddProject().setVisible(true));
     }
 }
