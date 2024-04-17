@@ -1,5 +1,6 @@
 package AddProjectPage;
 
+import AddEmployeePage.AddEmpSQLQueries;
 import AdminPage.Admin;
 import CustomWidgets.DateLabelFormatter;
 import ManageProjectPage.ManageProject;
@@ -13,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Properties;
 
 public class AddProject extends JFrame {
@@ -46,6 +48,16 @@ public class AddProject extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5); // Add some padding
 
         // Adding Employee Details Fields
+        JLabel projectIDLabel = new JLabel("Project ID:");
+        projectIDLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        JTextField projectIDField = new JTextField();
+        projectIDField.setPreferredSize(new Dimension(600, 30));
+        detailsPanel.add(projectIDLabel, gbc);
+        gbc.gridx++;
+        detailsPanel.add(projectIDField,gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+
         JLabel projectNameLabel = new JLabel("Project Name:");
         projectNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         JTextField projectNameField = new JTextField();
@@ -117,6 +129,38 @@ public class AddProject extends JFrame {
         addButton.setForeground(Color.WHITE);
         addButton.setBackground(new Color(47, 45, 82));
         addButton.setPreferredSize(new Dimension(200, 40));
+        addButton.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(startChooserModel.getValue());
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1;
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String startDate = year + "-" + month + "-" + day;
+
+                    calendar.setTime(endChooserModel.getValue());
+                    year = calendar.get(Calendar.YEAR);
+                    month = calendar.get(Calendar.MONTH) + 1;
+                    day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String endDate = year + "-" + month + "-" + day;
+
+
+                    AddProjectSQLQueries addProjectSQLQueries = new AddProjectSQLQueries();
+                    addProjectSQLQueries.addProject(
+                            projectIDField.getText(),
+                            projectNameField.getText(),
+                            (String) statusComboBox.getSelectedItem(),
+                            budgetField.getText(),
+                            startDate,
+                            endDate);
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
         JButton goBackButton = new JButton("Go Back");
         goBackButton.setBackground(new Color(47, 45, 82));
         goBackButton.setForeground(Color.WHITE);
