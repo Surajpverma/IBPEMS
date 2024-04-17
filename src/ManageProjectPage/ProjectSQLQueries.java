@@ -9,7 +9,7 @@ public class ProjectSQLQueries {
         String info = null;
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
         String query = "SELECT *\n" +
                 "FROM project p\n" +

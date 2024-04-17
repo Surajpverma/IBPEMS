@@ -1,7 +1,9 @@
 package LeavePage;
 
+import AdminPage.Admin;
 import CustomWidgets.DateLabelFormatter;
 import EmployeePage.Employee;
+import UserGlobalData.UserGlobalData;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -145,7 +147,11 @@ public class Leave extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Open new page logic here
                 dispose();
-                new Employee().setVisible(true);
+                if (UserGlobalData.isAdmin())
+                    new Admin().setVisible(true);
+                else
+                    new Employee().setVisible(true);
+
             }
         });
         buttonsPanel.add(applyLeaveButton);

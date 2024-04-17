@@ -3,8 +3,14 @@ package PersonalInfoPage;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
+import AdminPage.Admin;
+import EmployeePage.Employee;
 import UserGlobalData.UserGlobalData;
+
 import java.util.List;
 
 public class PersonalInfo extends JFrame {
@@ -17,7 +23,7 @@ public class PersonalInfo extends JFrame {
         // MAIN PANEL
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(new EmptyBorder(40, 60, 160, 60));
+        mainPanel.setBorder(new EmptyBorder(40, 60, 100, 60));
 
         // calling method for info
         infoSQLQueries info = new infoSQLQueries();
@@ -45,16 +51,34 @@ public class PersonalInfo extends JFrame {
 
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
-        //Declare suitable variable and assign value form SQL, and complete the rest
+        textArea.setEditable(false);
         textArea.setText(information);
-
         textArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         textArea.setForeground(new Color(47, 45, 82));
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
+        JButton goBackButton = new JButton("Go Back");
+        goBackButton.setBackground(new Color(47, 45, 82));
+        goBackButton.setForeground(Color.WHITE);
+        goBackButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        goBackButton.setPreferredSize(new Dimension(600, 40));
+        goBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                dispose();
+                if (UserGlobalData.isAdmin())
+                    new Admin().setVisible(true);
+                else
+                    new Employee().setVisible(true);
+
+            }
+        });
+
         mainPanel.add(gap);
         mainPanel.add(scrollPane);
+        mainPanel.add(goBackButton);
 
         add(mainPanel, BorderLayout.CENTER);
     }
