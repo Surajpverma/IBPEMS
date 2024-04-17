@@ -1,16 +1,19 @@
 package ManageProjectPage;
 
+import AddProjectPage.AddProject;
 import AdminPage.Admin;
 import CustomWidgets.TransparentJPanel;
+import SearchEmployeePage.SearchEmpSQLQueries;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ManageProject extends JFrame {
-    ManageProject() {
+    public ManageProject() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
@@ -64,11 +67,6 @@ public class ManageProject extends JFrame {
         button1.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button1.setBackground(new Color(47, 45, 82)); // Set background color
         button1.setPreferredSize(new Dimension(600, 60));
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
         buttonPanel.add(button1, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
@@ -87,6 +85,14 @@ public class ManageProject extends JFrame {
         button4.setPreferredSize(new Dimension(600, 60));
         buttonPanel.add(button4, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                dispose();
+                new AddProject().setVisible(true);
+            }
+        });
 
         JButton button3 = new JButton("Back");
         button3.setForeground(Color.WHITE); // Set text color
@@ -94,7 +100,7 @@ public class ManageProject extends JFrame {
         button3.setBackground(new Color(47, 45, 82)); // Set background color
         button3.setPreferredSize(new Dimension(600, 60));
         button3.setPreferredSize(new Dimension(600, 60));
-        button1.addActionListener(new ActionListener() {
+        button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open new page logic here
@@ -114,11 +120,29 @@ public class ManageProject extends JFrame {
         // RIGHT SIDE: Multiline Text Area
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
-        textArea.setText("Ongoing Tasks:\n1. Help son in Math homework\n2. Bring milk from market\n3. Satisfy my wife\n4. Regret my life");
+        textArea.setText("Enter Project ID and press Search");
         textArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         textArea.setForeground(new Color(47, 45, 82));
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
+
+        // Calling Search method for Projects
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProjectSQLQueries projectSQLQueries = new ProjectSQLQueries();
+                String information;
+                String pID = searchBar.getText();
+                try {
+                    information = projectSQLQueries.searchProject(pID);
+                    textArea.setText(information);
+                } catch (SQLException exp) {
+                    throw new RuntimeException(exp);
+                } catch (ClassNotFoundException exp) {
+                    throw new RuntimeException(exp);
+                }
+            }
+        });
 
         contentPanel.add(leftPanel);
         contentPanel.add(scrollPane);
@@ -126,5 +150,8 @@ public class ManageProject extends JFrame {
         mainPanel.add(Box.createVerticalGlue()); // Add vertical glue to push components upwards
         mainPanel.add(contentPanel);
         add(mainPanel, BorderLayout.CENTER);
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new ManageProject().setVisible(true));
     }
 }
