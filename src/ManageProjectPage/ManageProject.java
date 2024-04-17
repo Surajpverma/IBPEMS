@@ -3,14 +3,14 @@ package ManageProjectPage;
 import AddProjectPage.AddProject;
 import AdminPage.Admin;
 import CustomWidgets.TransparentJPanel;
-import SearchEmployeePage.SearchEmpSQLQueries;
+import EditProjectPage.EditProject;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ManageProject extends JFrame {
     public ManageProject() {
@@ -75,6 +75,48 @@ public class ManageProject extends JFrame {
         button2.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button2.setBackground(new Color(47, 45, 82)); // Set background color
         button2.setPreferredSize(new Dimension(600, 60));
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String pID = "", projectName = "", pstatus = "";
+                int budget = 0;
+                Date startDate = null, endDate = null;
+
+                try {
+                    String info = null;
+
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
+
+                    String query = "SELECT *\n" +
+                            "FROM project p\n" +
+                            "WHERE p.projectID = " + "\"" + searchBar.getText() + "\"";
+                    PreparedStatement preparedStatement = con.prepareStatement(query);
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    while (resultSet.next()) {
+                        pID = resultSet.getString("projectID");
+                        projectName = resultSet.getString("projectName");
+                        pstatus = resultSet.getString("pstatus");
+                        budget = resultSet.getInt("budget");
+                        startDate = resultSet.getDate("startDate");
+                        endDate = resultSet.getDate("endDate");
+                        System.out.println(resultSet);
+                        info = "Project ID: " + pID + "\nProject Name: " + projectName + "\nStatus: " + pstatus + "\nBudget: " + budget + "\nStart Date: " + startDate + "\nEnd Date: " + endDate;
+                    }
+
+                    resultSet.close();
+                    preparedStatement.close();
+                    con.close();
+                } catch (Exception exp) {
+
+                }
+                // Open new page logic here
+                dispose();
+                new EditProject(pID, projectName, pstatus, startDate, endDate, budget).setVisible(true);
+            }
+        });
         buttonPanel.add(button2, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
@@ -151,6 +193,7 @@ public class ManageProject extends JFrame {
         mainPanel.add(contentPanel);
         add(mainPanel, BorderLayout.CENTER);
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ManageProject().setVisible(true));
     }
