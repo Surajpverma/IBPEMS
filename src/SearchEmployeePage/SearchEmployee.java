@@ -1,5 +1,6 @@
 package SearchEmployeePage;
 
+import AddProjectPage.AddProjectSQLQueries;
 import AdminPage.Admin;
 import CustomWidgets.DateLabelFormatter;
 import CustomWidgets.TransparentJPanel;
@@ -135,6 +136,15 @@ public class SearchEmployee extends JFrame {
         buttonPanel.add(button2, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
+        // Delete Employee
+        JButton delEmp = new JButton("Remove Employee");
+        delEmp.setForeground(Color.WHITE); // Set text color
+        delEmp.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
+        delEmp.setBackground(new Color(47, 45, 82)); // Set background color
+        delEmp.setPreferredSize(new Dimension(600, 60));
+        buttonPanel.add(delEmp, gbc);
+        buttonPanel.add(Box.createVerticalStrut(16), gbc);
+
         JButton button3 = new JButton("Back");
         button3.setForeground(Color.WHITE); // Set text color
         button3.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
@@ -243,6 +253,20 @@ public class SearchEmployee extends JFrame {
                     throw new RuntimeException(exp);
                 } catch (ClassNotFoundException exp) {
                     throw new RuntimeException(exp);
+                }
+            }
+        });
+
+        delEmp.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    SearchEmpSQLQueries search = new SearchEmpSQLQueries();
+                    String empId = searchBar.getText();
+                    search.deleteEmployee(empId);
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
                 }
             }
         });
