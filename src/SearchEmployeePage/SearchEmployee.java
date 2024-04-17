@@ -3,6 +3,7 @@ package SearchEmployeePage;
 import AdminPage.Admin;
 import CustomWidgets.DateLabelFormatter;
 import CustomWidgets.TransparentJPanel;
+import AssignTask.AssignTask;
 import LeavePage.Leave;
 import PersonalInfoPage.PersonalInfo;
 import PersonalInfoPage.infoSQLQueries;
@@ -23,6 +24,14 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 public class SearchEmployee extends JFrame {
+    public static boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     public SearchEmployee() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
@@ -116,6 +125,16 @@ public class SearchEmployee extends JFrame {
         button2.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button2.setBackground(new Color(47, 45, 82)); // Set background color
         button2.setPreferredSize(new Dimension(600, 60));
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Open new page logic here
+                if (isInteger(searchBar.getText())) {
+                    dispose();
+                    new AssignTask(Integer.getInteger(searchBar.getText())).setVisible(true);
+                }
+            }
+        });
         buttonPanel.add(button2, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
