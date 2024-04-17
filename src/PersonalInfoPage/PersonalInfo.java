@@ -3,9 +3,11 @@ package PersonalInfoPage;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.SQLException;
+import UserGlobalData.UserGlobalData;
+import java.util.List;
 
 public class PersonalInfo extends JFrame {
-    private final String name = "JONNY SINS";
 
     public PersonalInfo() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,6 +20,17 @@ public class PersonalInfo extends JFrame {
         mainPanel.setBorder(new EmptyBorder(40, 60, 160, 60));
 
         // WELCOME TEXT
+        infoSQLQueries info = new infoSQLQueries();
+//        List<String> information = info.getInfo(12);
+        String information;
+        int empId = UserGlobalData.getUserEmployeeID();
+        try {
+            information = info.getInfo(11);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         JLabel welcomeText = new JLabel("PERSONAL INFORMATION");
         welcomeText.setBorder(new EmptyBorder(0, 0, 40, 0));
         welcomeText.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
@@ -32,15 +45,12 @@ public class PersonalInfo extends JFrame {
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
         //Declare suitable variable and assign value form SQL, and complete the rest
-        textArea.setText(
-                "NAME: " + name
-                + "\nID: "
-                + "\nAGE: "
-        );
+        textArea.setText(information);
+
         textArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         textArea.setForeground(new Color(47, 45, 82));
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setBorder(new EmptyBorder(0,0,0,0));
+        scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         mainPanel.add(gap);
         mainPanel.add(scrollPane);
