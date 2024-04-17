@@ -4,12 +4,15 @@ import AdminPage.Admin;
 import CustomWidgets.TransparentJPanel;
 import LeavePage.Leave;
 import PersonalInfoPage.PersonalInfo;
+import PersonalInfoPage.infoSQLQueries;
+import UserGlobalData.UserGlobalData;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class SearchEmployee extends JFrame {
     public SearchEmployee() {
@@ -43,7 +46,7 @@ public class SearchEmployee extends JFrame {
         searchBar.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
 
         // Label for the search bar
-        JLabel searchLabel = new JLabel("Username: ");
+        JLabel searchLabel = new JLabel("Employee ID: ");
         searchLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         searchLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -66,11 +69,7 @@ public class SearchEmployee extends JFrame {
         button1.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         button1.setBackground(new Color(47, 45, 82)); // Set background color
         button1.setPreferredSize(new Dimension(600, 60));
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+
         buttonPanel.add(button1, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
@@ -88,7 +87,7 @@ public class SearchEmployee extends JFrame {
         button3.setBackground(new Color(47, 45, 82)); // Set background color
         button3.setPreferredSize(new Dimension(600, 60));
         button3.setPreferredSize(new Dimension(600, 60));
-        button1.addActionListener(new ActionListener() {
+        button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open new page logic here
@@ -96,6 +95,7 @@ public class SearchEmployee extends JFrame {
                 new Admin().setVisible(true);
             }
         });
+
         buttonPanel.add(button3, gbc);
         buttonPanel.add(Box.createVerticalStrut(16), gbc);
 
@@ -105,14 +105,34 @@ public class SearchEmployee extends JFrame {
 
         leftPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
 
+
         // RIGHT SIDE: Multiline Text Area
         JTextArea textArea = new JTextArea();
         textArea.setOpaque(false);
-        textArea.setText("Ongoing Tasks:\n1. Help son in Math homework\n2. Bring milk from market\n3. Satisfy my wife\n4. Regret my life");
+        textArea.setText("-");
         textArea.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         textArea.setForeground(new Color(47, 45, 82));
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
+
+
+        // Calling seach method
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SearchEmpSQLQueries search = new SearchEmpSQLQueries();
+                String information;
+                String empId = searchBar.getText();
+                try {
+                    information = search.searchEmployee(empId);
+                    textArea.setText(information);
+                } catch (SQLException exp) {
+                    throw new RuntimeException(exp);
+                } catch (ClassNotFoundException exp) {
+                    throw new RuntimeException(exp);
+                }
+            }
+        });
 
         contentPanel.add(leftPanel);
         contentPanel.add(scrollPane);
