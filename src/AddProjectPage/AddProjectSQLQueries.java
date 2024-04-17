@@ -11,7 +11,7 @@ public class AddProjectSQLQueries {
         List<String> tasks = new ArrayList<>();
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
         String query = "INSERT INTO\n" +
                 "project (projectID, projectName, pstatus, budget, startDate, endDate)\n" +

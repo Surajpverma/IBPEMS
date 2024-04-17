@@ -36,29 +36,6 @@ public class Leave extends JFrame {
         mainPanel.add(Box.createVerticalStrut(20)); // Add some vertical space
         mainPanel.add(welcomeText);
 
-        // SUBTITLE PANEL
-        JPanel subtitleRow = new JPanel(new GridLayout());
-        JLabel branch = new JLabel("Branch: $NAME");
-        branch.setHorizontalAlignment(SwingConstants.CENTER);
-        branch.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        branch.setForeground(new Color(47, 45, 82));
-        JLabel projects = new JLabel("Upcoming Deadline: $NAME");
-        projects.setHorizontalAlignment(SwingConstants.CENTER);
-        projects.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        projects.setForeground(new Color(47, 45, 82));
-        JLabel employees = new JLabel("Task: $NAME");
-        employees.setHorizontalAlignment(SwingConstants.CENTER);
-        employees.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        employees.setForeground(new Color(47, 45, 82));
-        subtitleRow.add(branch);
-        subtitleRow.add(projects);
-        subtitleRow.add(employees);
-        subtitleRow.setPreferredSize(new Dimension(720, 60));
-
-        mainPanel.add(subtitleRow);
-        mainPanel.add(Box.createVerticalGlue()); // Add vertical glue to push components upwards
-        mainPanel.add(Box.createVerticalStrut(60));
-
         // DATE PICKERS AND BUTTONS PANEL
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));

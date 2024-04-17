@@ -45,7 +45,7 @@ public class SearchEmpSQLQueries {
         List<String> info = new ArrayList<>();
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
         String query = "SELECT e.employeeID, e.fName, e.lName\n" +
                 "FROM employee e\n" +
@@ -82,7 +82,7 @@ public class SearchEmpSQLQueries {
         }
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "Dustu@2002");
 
         String query = "SELECT a.employeeID, e.fName, e.lName, COUNT(DISTINCT date) AS attended_days " +
                 "FROM attendance a " +

@@ -19,16 +19,47 @@
     <connection id="d1565a62-fe14-4011-8951-ed37c2135e96">
       <console name="MySQL Connection" type="STANDARD" schema="employee_management" session="Main"><![CDATA[use employee_management
 
-INSERT INTO worksOn (taskID, employeeID) VALUES)
-('PRJ02T02', 3),
-('PRJ01T03', 3);]]></console>
+INSERT INTO attendance (employeeID, date, intime, outtime) VALUES
+(1, '2023-03-01', NULL, NULL),
+(1, '2023-03-02', NULL, NULL),
+(1, '2023-03-03', NULL, NULL),
+(1, '2023-03-04', NULL, NULL),
+(1, '2023-03-05', NULL, NULL),
+(1, '2023-03-06', NULL, NULL),
+(1, '2023-03-07', NULL, NULL),
+(1, '2023-03-08', NULL, NULL),
+(1, '2023-03-09', NULL, NULL),
+(1, '2023-03-10', NULL, NULL),
+(1, '2023-03-11', NULL, NULL),
+(1, '2023-03-12', NULL, NULL),
+(1, '2023-03-13', NULL, NULL),
+(1, '2023-03-14', NULL, NULL),
+(1, '2023-03-15', NULL, NULL),
+(1, '2023-03-16', NULL, NULL),
+(1, '2023-03-17', NULL, NULL),
+(1, '2023-03-18', NULL, NULL),
+(1, '2023-03-19', NULL, NULL),
+(1, '2023-03-20', NULL, NULL),
+(1, '2023-03-21', NULL, NULL),
+(1, '2023-03-22', NULL, NULL),
+(1, '2023-03-23', NULL, NULL),
+(1, '2023-03-24', NULL, NULL),
+(1, '2023-03-25', NULL, NULL),
+(1, '2023-03-26', NULL, NULL),
+(1, '2023-03-27', NULL, NULL),
+(1, '2023-03-28', NULL, NULL),
+(1, '2023-03-29', NULL, NULL),
+(1, '2023-03-30', NULL, NULL),
+(1, '2023-03-31', NULL, NULL);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="d1565a62-fe14-4011-8951-ed37c2135e96" object-ref="consoles/MySQL Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d1565a62-fe14-4011-8951-ed37c2135e96" />

@@ -76,9 +76,8 @@ public class SearchEmployee extends JFrame {
 
         leftPanel.add(startChooserPicker);
 
-
         // Label for the search bar
-        JLabel searchLabel = new JLabel("EmpID/Date: ");
+        JLabel searchLabel = new JLabel("Employee ID: ");
         searchLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         searchLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -225,7 +224,8 @@ public class SearchEmployee extends JFrame {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(startChooserModel.getValue());
                 String year = "" + calendar.get(Calendar.YEAR);
-                String month = "" + calendar.get(Calendar.MONTH) + 1;
+                int monthInt = calendar.get(Calendar.MONTH) + 1;
+                String month = "" + monthInt;
 
                 SearchEmpSQLQueries search = new SearchEmpSQLQueries();
                 List<String> information;

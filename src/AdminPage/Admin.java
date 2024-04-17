@@ -37,24 +37,6 @@ public class Admin extends JFrame {
         mainPanel.add(Box.createVerticalStrut(20)); // Add some vertical space
         mainPanel.add(welcomeText);
 
-        // SUBTITLE PANEL
-        JPanel subtitleRow = new JPanel(new GridLayout());
-        JLabel branch = new JLabel("Branch: " + UserGlobalData.getUserBranch());
-        branch.setHorizontalAlignment(SwingConstants.CENTER);
-        branch.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        branch.setForeground(new Color(47, 45, 82));
-        JLabel projects = new JLabel("Upcoming Deadline: $NAME");
-        projects.setHorizontalAlignment(SwingConstants.CENTER);
-        projects.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        projects.setForeground(new Color(47, 45, 82));
-        JLabel employees = new JLabel("Task: $NAME");
-        employees.setHorizontalAlignment(SwingConstants.CENTER);
-        employees.setFont(new Font(Font.SERIF, Font.BOLD, 24));
-        employees.setForeground(new Color(47, 45, 82));
-        subtitleRow.add(branch);
-        subtitleRow.add(projects);
-        subtitleRow.add(employees);
-
         // BUTTON SIDE: Buttons
         TransparentJPanel buttonPanel = new TransparentJPanel();
         buttonPanel.setLayout(new GridBagLayout());
@@ -182,10 +164,6 @@ public class Admin extends JFrame {
         buttonPanel.add(button7, gbc);
         buttonPanel.setBorder(new EmptyBorder(0, 120, 0, 120));
 
-        // Set fixed height for subtitleRow
-        subtitleRow.setPreferredSize(new Dimension(720, 60)); // Set preferred size
-
-        mainPanel.add(subtitleRow);
         mainPanel.add(Box.createVerticalGlue()); // Add vertical glue to push components upwards
         mainPanel.add(buttonPanel);
         add(mainPanel, BorderLayout.CENTER);
