@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EditProject extends JFrame {
-    public EditProject(String projectName, String projectStatus, Date startDate, Date endDate, int budget, String[] tasks) {
+    public EditProject(String projectID, String projectName, String projectStatus, Date startDate, Date endDate, int budget) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
@@ -103,6 +104,7 @@ public class EditProject extends JFrame {
         gbc.gridy++;
         gbc.gridx = 0;
 
+        JDatePickerImpl endChooserPicker;
         if (endDate != null) {
             calendar.setTime(endDate);
             year = calendar.get(Calendar.YEAR);
@@ -114,34 +116,20 @@ public class EditProject extends JFrame {
             UtilDateModel endChooserModel = new UtilDateModel();
             endChooserModel.setDate(year, month, day);
             JDatePanelImpl endChooserPanel = new JDatePanelImpl(endChooserModel, p);
-            JDatePickerImpl endChooserPicker = new JDatePickerImpl(endChooserPanel, new DateLabelFormatter());
+            endChooserPicker = new JDatePickerImpl(endChooserPanel, new DateLabelFormatter());
             detailsPanel.add(endLabel, gbc);
             gbc.gridx++;
             detailsPanel.add(endChooserPicker, gbc);
-            gbc.gridy++;
-            gbc.gridx = 0;
         } else {
             JLabel endLabel = new JLabel("End Date:");
             endLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
             UtilDateModel endChooserModel = new UtilDateModel();
             JDatePanelImpl endChooserPanel = new JDatePanelImpl(endChooserModel, p);
-            JDatePickerImpl endChooserPicker = new JDatePickerImpl(endChooserPanel, new DateLabelFormatter());
+            endChooserPicker = new JDatePickerImpl(endChooserPanel, new DateLabelFormatter());
             detailsPanel.add(endLabel, gbc);
             gbc.gridx++;
             detailsPanel.add(endChooserPicker, gbc);
-            gbc.gridy++;
-            gbc.gridx = 0;
         }
-
-        //Tasks
-        JLabel contactLabel = new JLabel("Tasks:");
-        contactLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
-        JTextArea contactArea = new JTextArea();
-        contactArea.setPreferredSize(new Dimension(600, 30));
-        JScrollPane contactScrollPane = new JScrollPane(contactArea);
-        detailsPanel.add(contactLabel, gbc);
-        gbc.gridx++;
-        detailsPanel.add(contactScrollPane, gbc);
         gbc.gridy++;
         gbc.gridx = 0;
 
@@ -160,6 +148,18 @@ public class EditProject extends JFrame {
         addButton.setForeground(Color.WHITE);
         addButton.setBackground(new Color(47, 45, 82));
         addButton.setPreferredSize(new Dimension(200, 40));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    EditProjectSQLQueries.editProject(projectID, projectNameField.getText(), (String) statusComboBox.getSelectedItem().toString(), Integer.getInteger(budgetField.getText()), DateLabelFormatter.convertToSQLDate(startChooserPicker.getModel().getValue()), DateLabelFormatter.convertToSQLDate(endChooserPicker.getModel().getValue()));
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         JButton goBackButton = new JButton("Go Back");
         goBackButton.setBackground(new Color(47, 45, 82));
         goBackButton.setForeground(Color.WHITE);

@@ -1,6 +1,8 @@
 package SearchEmployeePage;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchEmpSQLQueries {
     public static String searchEmployee(String employeeID) throws SQLException, ClassNotFoundException {
@@ -13,7 +15,6 @@ public class SearchEmpSQLQueries {
                 "FROM employee e\n" +
                 "WHERE e.employeeID"+ "=" + employeeID;
         PreparedStatement preparedStatement = con.prepareStatement(query);
-//        preparedStatement.setInt(1, employeeID);
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -31,6 +32,75 @@ public class SearchEmpSQLQueries {
             String branchID = resultSet.getString("branchID");
             System.out.println(resultSet);
             info = "EmployeeID: " + empID + "\nPosition: " + position + "\nName: " + fName + " "+ lName + "\nGender: "+ gender + "\nHiringDate: "+ hiringDate+ "\nDOB: " + DOB + "\nEmail: "+ email + "\nSalary: " + salary + "\nDeptID: " + deptID + "\nBranchID: " + branchID;
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+        con.close();
+
+        return info;
+    }
+
+    public static List<String> searchPresentOn(String day) throws SQLException, ClassNotFoundException {
+        List<String> info = new ArrayList<>();
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+
+        String query = "SELECT e.employeeID, e.fName, e.lName\n" +
+                "FROM employee e\n" +
+                "LEFT JOIN\n" +
+                "attendance a ON e.employeeID = a.employeeID " + // Added a space here
+                "WHERE a.date = '" + day + "' AND a.employeeID IS NOT NULL;";
+
+
+        PreparedStatement preparedStatement = con.prepareStatement(query);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            String empID = resultSet.getString("employeeID");
+            String fName = resultSet.getString("fName");
+            String lName = resultSet.getString("lName");
+            System.out.println(resultSet);
+            info.add(empID + " - " + fName + " "+ lName) ;
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+        con.close();
+
+        return info;
+    }
+
+    public static List<String> searchPresentIn(String year, String month) throws SQLException, ClassNotFoundException {
+        List<String> info = new ArrayList<>();
+
+        // Pad month with leading zero if necessary
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_management", "root", "spv@2112");
+
+        String query = "SELECT a.employeeID, e.fName, e.lName, COUNT(DISTINCT date) AS attended_days " +
+                "FROM attendance a " +
+                "INNER JOIN employee e ON a.employeeID = e.employeeID " +
+                "WHERE MONTH(a.date) = '" + month + "' AND YEAR(a.date) = '" + year + "' " +
+                "GROUP BY a.employeeID, e.fName, e.lName " +
+                "HAVING COUNT(DISTINCT date) = DAY(LAST_DAY('" + year + "-" + month + "-01'))";
+
+        PreparedStatement preparedStatement = con.prepareStatement(query);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            String empID = resultSet.getString("employeeID");
+            String fName = resultSet.getString("fName");
+            String lName = resultSet.getString("lName");
+            System.out.println(resultSet);
+            info.add(empID + " - " + fName + " "+ lName) ;
         }
 
         resultSet.close();
