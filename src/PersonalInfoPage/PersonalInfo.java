@@ -19,18 +19,19 @@ public class PersonalInfo extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(new EmptyBorder(40, 60, 160, 60));
 
-        // WELCOME TEXT
+        // calling method for info
         infoSQLQueries info = new infoSQLQueries();
-//        List<String> information = info.getInfo(12);
         String information;
         int empId = UserGlobalData.getUserEmployeeID();
         try {
-            information = info.getInfo(11);
+            information = info.getInfo(empId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        // WELCOME TEXT
         JLabel welcomeText = new JLabel("PERSONAL INFORMATION");
         welcomeText.setBorder(new EmptyBorder(0, 0, 40, 0));
         welcomeText.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
