@@ -129,10 +129,8 @@ public class SearchEmployee extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open new page logic here
-                if (isInteger(searchBar.getText())) {
-                    dispose();
-                    new AssignTask(Integer.getInteger(searchBar.getText())).setVisible(true);
-                }
+                dispose();
+                new AssignTask(searchBar.getText()).setVisible(true);
             }
         });
         buttonPanel.add(button2, gbc);

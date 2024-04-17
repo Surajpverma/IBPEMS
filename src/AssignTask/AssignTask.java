@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.Properties;
 
 public class AssignTask extends JFrame {
-    public AssignTask(int employeeID) {
+    public AssignTask(String employeeID) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
@@ -109,7 +109,7 @@ public class AssignTask extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    AssignTaskSQLQueries.assignTask(employeeID, DateLabelFormatter.convertToSQLDate(deadlineDateChooserPicker.getModel().getValue()), nameField.getText(), projectIDField.getText());
+                    AssignTaskSQLQueries.assignTask(Integer.parseInt(employeeID), DateLabelFormatter.convertToSQLDate(deadlineDateChooserPicker.getModel().getValue()), nameField.getText(), projectIDField.getText());
                 }
                 catch(Exception ex){
                     ex.printStackTrace();
